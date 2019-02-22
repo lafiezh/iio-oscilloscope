@@ -106,6 +106,7 @@ PLUGINS=\
 	plugins/lidar.$(SO) \
 	plugins/dmm.$(SO) \
 	plugins/debug.$(SO) \
+	plugins/generic_plugin.$(SO) \
 	$(if $(WITH_MINGW),,plugins/spectrum_analyzer.so) \
 	$(if $(WITH_MINGW),,plugins/scpi.so)
 
