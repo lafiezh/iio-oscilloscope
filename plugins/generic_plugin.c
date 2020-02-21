@@ -29,14 +29,15 @@
 #include "../osc_plugin.h"
 #include "../config.h"
 #include "../eeprom.h"
-#include "./block_diagram.h"
+//#include "./block_diagram.h"
 #include "dac_data_manager.h"
 
 #define THIS_DRIVER "GENERIC_PLUGIN"
 
 #define ARRAY_SIZE(x) (!sizeof(x) ?: sizeof(x) / sizeof((x)[0]))
 
-#define DAC_DEVICE "cf-ad9361-dds-core-lpc"
+#define DAC_DEVICE "demo_device"
+#define DDS_DEVICE "cf-ad9361-dds-core-lpc"
 
 static struct dac_data_manager *dac_tx_manager;
 
@@ -104,7 +105,7 @@ static void make_widget_update_signal_based(struct iio_widget *widgets,
 static bool generic_identify(const struct osc_plugin *plugin)
 {
 	/* Use the OSC's IIO context just to detect the devices */
-	struct iio_context *osc_ctx = get_context_from_osc();
+//	struct iio_context *osc_ctx = get_context_from_osc();
 
 	return 1;
 }
@@ -117,7 +118,7 @@ static GtkWidget * generic_init(struct osc_plugin *plugin, GtkWidget *notebook,
 	GtkWidget *dds_container;
 	GtkWidget *dds_vbox;
 	bool generic_en = false;
-	guint i;
+//	guint i;
 
 	ctx = osc_create_context();
 	if (!ctx)
@@ -130,13 +131,20 @@ static GtkWidget * generic_init(struct osc_plugin *plugin, GtkWidget *notebook,
 	generic_panel = GTK_WIDGET(gtk_builder_get_object(builder, "generic_panel"));
 	dds_vbox = GTK_WIDGET(gtk_builder_get_object(builder, "dds_vbox"));
 
-	int count = iio_context_get_devices_count(ctx);
-	for (i = 0; i < count; i++) {
-		dac = iio_context_get_device(ctx, i);
+//	int count = iio_context_get_devices_count(ctx);
+	//for (i = 0; i < count; i++)
+	{
+//		dac = iio_context_get_device(ctx, i);
 
+//		dac = iio_context_find_device(ctx, DDS_DEVICE);
+//		dac_tx_manager = dac_data_manager_new(dac, NULL, ctx);
+
+
+		dac = iio_context_find_device(ctx, DAC_DEVICE);
 		dac_tx_manager = dac_data_manager_new(dac, NULL, ctx);
 		if (!dac_tx_manager)
-			continue;
+//			continue;
+			return NULL;
 
 		generic_en = true;
 
